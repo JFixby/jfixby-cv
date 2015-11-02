@@ -19,7 +19,7 @@ import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cv.api.gwt.ImageGWTComponent;
 
-public class RedImageGWTComponent implements ImageGWTComponent {
+public class RedImageGWT implements ImageGWTComponent {
 
 	@Override
 	public BufferedImage readFromFile(File image_file) throws IOException {
