@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.jfixby.cmns.api.components.ComponentInstaller;
 import com.jfixby.cmns.api.filesystem.File;
 import com.jfixby.cmns.api.image.ColorMap;
+import com.jfixby.cmns.api.image.EditableColorMap;
 
 public class ImageGWT {
 
@@ -31,11 +32,11 @@ public class ImageGWT {
 		invoke().writeToFile(javaImage, image_file, file_type);
 	}
 
-	public static ColorMap newGWTColorMap(BufferedImage image) {
+	public static EditableColorMap newGWTColorMap(BufferedImage image) {
 		return invoke().newGWTColorMap(image);
 	}
 
-	public static ColorMap newGWTColorMap(java.io.InputStream java_input_stream) throws IOException {
+	public static EditableColorMap newGWTColorMap(java.io.InputStream java_input_stream) throws IOException {
 		return invoke().newGWTColorMap(java_input_stream);
 	}
 
@@ -44,7 +45,7 @@ public class ImageGWT {
 
 	}
 
-	public static ColorMap readGWTColorMap(File image_file) throws IOException {
+	public static GwtColorMap readGWTColorMap(File image_file) throws IOException {
 		return invoke().readGWTColorMap(image_file);
 	}
 

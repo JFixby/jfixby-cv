@@ -16,6 +16,7 @@ import com.jfixby.cmns.api.filesystem.File;
 import com.jfixby.cmns.api.filesystem.FileInputStream;
 import com.jfixby.cmns.api.filesystem.FileOutputStream;
 import com.jfixby.cmns.api.image.ColorMap;
+import com.jfixby.cmns.api.image.EditableColorMap;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cv.api.gwt.ImageGWTComponent;
 
@@ -139,7 +140,7 @@ public class RedImageGWT implements ImageGWTComponent {
 		return val;
 	}
 
-	public static String toString(ColorMap argb) {
+	public static String toString(EditableColorMap argb) {
 		String result = "[" + argb.getWidth() + ";" + argb.getHeight() + "]" + next_line_L;
 
 		// Log.d("delta", delta);
