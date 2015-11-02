@@ -58,13 +58,13 @@ public class RedImageGWT implements ImageGWTComponent {
 	}
 
 	@Override
-	public ColorMap newGWTColorMap(BufferedImage img) {
+	public GWTColorFunction newGWTColorMap(BufferedImage img) {
 		JUtils.checkNull(img);
 		return new GWTColorFunction(img);
 	}
 
 	@Override
-	public ColorMap newGWTColorMap(InputStream java_is) throws IOException {
+	public GWTColorFunction newGWTColorMap(InputStream java_is) throws IOException {
 		BufferedImage bad_image = ImageIO.read(java_is);
 		if (bad_image == null) {
 			L.d("Failed to read image", java_is);
@@ -163,10 +163,10 @@ public class RedImageGWT implements ImageGWTComponent {
 	}
 
 	@Override
-	public ColorMap readGWTColorMap(File image_file) throws IOException {
+	public GWTColorFunction readGWTColorMap(File image_file) throws IOException {
 		FileInputStream is = image_file.newInputStream();
 		InputStream java_is = is.toJavaInputStream();
-		ColorMap map = this.newGWTColorMap(java_is);
+		GWTColorFunction map = this.newGWTColorMap(java_is);
 		java_is.close();
 		is.close();
 		return map;

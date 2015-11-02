@@ -12,12 +12,12 @@ public interface ImageGWTComponent {
 
 	void writeToFile(java.awt.Image java_img_icon, File file, String file_type) throws IOException;
 
-	ColorMap newGWTColorMap(BufferedImage image);
+	GwtColorMap newGWTColorMap(BufferedImage image);
 
 	BufferedImage toGWTImage(ColorMap image_function);
 
-	ColorMap newGWTColorMap(java.io.InputStream java_is) throws IOException;
+	GwtColorMap newGWTColorMap(java.io.InputStream java_is) throws IOException;
 
-	ColorMap readGWTColorMap(File image_file)throws IOException;
+	GwtColorMap readGWTColorMap(File image_file)throws IOException;
 
 }
