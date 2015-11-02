@@ -5,8 +5,7 @@ import java.io.IOException;
 
 import com.jfixby.cmns.api.components.ComponentInstaller;
 import com.jfixby.cmns.api.filesystem.File;
-import com.jfixby.cmns.api.image.ColorFunction;
-import com.jfixby.cmns.api.io.Buffer;
+import com.jfixby.cmns.api.image.ColorMap;
 
 public class ImageGWT {
 
@@ -24,20 +23,29 @@ public class ImageGWT {
 		return componentInstaller.getComponent();
 	}
 
-	public static BufferedImage readJavaImage(File image_file) throws IOException {
-		return invoke().readJavaImage(image_file);
+	public static BufferedImage readFromFile(File image_file) throws IOException {
+		return invoke().readFromFile(image_file);
 	}
 
-	public static void writeJavaFile(java.awt.Image javaImage, File image_file, String file_type) throws IOException {
-		invoke().writeJavaFile(javaImage, image_file, file_type);
+	public static void writeToFile(java.awt.Image javaImage, File image_file, String file_type) throws IOException {
+		invoke().writeToFile(javaImage, image_file, file_type);
 	}
 
-	public static ColorFunction newColorFunction(BufferedImage image) {
-		return invoke().newColorFunction(image);
+	public static ColorMap newGWTColorMap(BufferedImage image) {
+		return invoke().newGWTColorMap(image);
 	}
 
-	public static ColorFunction newColorFunction(Buffer buffer) throws IOException {
-		return invoke().newColorFunction(buffer);
+	public static ColorMap newGWTColorMap(java.io.InputStream java_input_stream) throws IOException {
+		return invoke().newGWTColorMap(java_input_stream);
+	}
+
+	public static BufferedImage toGWTImage(ColorMap image_function) {
+		return invoke().toGWTImage(image_function);
+
+	}
+
+	public static ColorMap readGWTColorMap(File image_file) throws IOException {
+		return invoke().readGWTColorMap(image_file);
 	}
 
 }

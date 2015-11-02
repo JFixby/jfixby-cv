@@ -2,27 +2,27 @@ package com.jfixby.cv.red.gwt;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 
 import com.jfixby.cmns.api.collections.JUtils;
+import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.filesystem.File;
 import com.jfixby.cmns.api.filesystem.FileInputStream;
 import com.jfixby.cmns.api.filesystem.FileOutputStream;
-import com.jfixby.cmns.api.image.ColorFunction;
-import com.jfixby.cmns.api.io.Buffer;
-import com.jfixby.cmns.api.io.BufferInputStream;
-import com.jfixby.cmns.api.io.IO;
+import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cv.api.gwt.ImageGWTComponent;
 
 public class RedImageGWTComponent implements ImageGWTComponent {
 
 	@Override
-	public BufferedImage readJavaImage(File image_file) throws IOException {
+	public BufferedImage readFromFile(File image_file) throws IOException {
 		JUtils.checkNull("image_file", image_file);
 		FileInputStream is = image_file.newInputStream();
 		InputStream java_is = is.toJavaInputStream();
@@ -41,7 +41,10 @@ public class RedImageGWTComponent implements ImageGWTComponent {
 	}
 
 	@Override
-	public void writeJavaFile(java.awt.Image java_image, File file, String file_type) throws IOException {
+	public void writeToFile(java.awt.Image java_image, File file, String file_type) throws IOException {
+		JUtils.checkNull("java_image", java_image);
+		JUtils.checkNull("file", file);
+		JUtils.checkNull("file_type", file_type);
 		int width = java_image.getWidth(null);
 		int height = java_image.getHeight(null);
 		BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -55,23 +58,117 @@ public class RedImageGWTComponent implements ImageGWTComponent {
 	}
 
 	@Override
-	public ColorFunction newColorFunction(BufferedImage img) {
+	public ColorMap newGWTColorMap(BufferedImage img) {
 		JUtils.checkNull(img);
-		return new DesktopColorFunction(img);
+		return new GWTColorFunction(img);
 	}
 
 	@Override
-	public ColorFunction newColorFunction(Buffer buffer) throws IOException {
-		BufferInputStream is = IO.newBufferInputStream(buffer);
-		InputStream java_is = is.toJavaInputStream();
+	public ColorMap newGWTColorMap(InputStream java_is) throws IOException {
 		BufferedImage bad_image = ImageIO.read(java_is);
 		if (bad_image == null) {
-			L.d("Failed to read image", buffer);
+			L.d("Failed to read image", java_is);
 
-			throw new IOException("Failed to read image: " + buffer);
+			throw new IOException("Failed to read image: " + java_is);
 		}
-		is.close();
-		return this.newColorFunction(bad_image);
+		return this.newGWTColorMap(bad_image);
 	}
 
+	@Override
+	public BufferedImage toGWTImage(ColorMap image_function) {
+		int h = image_function.getHeight();
+		int w = image_function.getWidth();
+		BufferedImage im = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		int[] data = ((DataBufferInt) im.getRaster().getDataBuffer()).getData();
+		for (int j = 0; j < h; j++) {
+			for (int i = 0; i < w; i++) {
+				int K = i + j * w;
+				Color color_c = image_function.getValue(i, j);
+				data[K] = color_c.toInteger();
+			}
+		}
+		return im;
+	}
+
+	static final Vector<String> palette = new Vector<String>();
+	static String next_line_L = "\n";
+	static float delta;
+	static {
+		boolean use_grayscale_symbols = true;
+		if (use_grayscale_symbols) {
+			// String color0 = "█";
+			// String color1 = "▓";
+			// String color2 = "▒";
+			// String color3 = "░";
+			// String color4 = " ";
+			palette.add("█");
+			palette.add("▓");
+			palette.add("▒");
+			palette.add("░");
+			palette.add(" ");
+		} else {
+			// int N = ASCI_palette.length();
+			// for (int i = 0; i < N; i++) {
+			// palette.add(ASCI_palette.charAt(i) + "");
+			// }
+			// palette.add("█");
+			// palette.add("▓");
+			// palette.add("▓");
+			// palette.add("▒");
+			// palette.add("▒");
+			// palette.add("░");
+			// palette.add("░");
+			// palette.add(" ");
+			// palette.add(" ");
+
+		}
+
+		delta = 1f / palette.size();
+
+	}
+
+	private static String palette(float gray) {
+		int index = (int) ((gray) * (1f / delta));
+		if (index == palette.size()) {
+			index--;
+		}
+		if (index < 0) {
+			index = 0;
+		}
+		String val = palette.get(index);
+		return val;
+	}
+
+	public static String toString(ColorMap argb) {
+		String result = "[" + argb.getWidth() + ";" + argb.getHeight() + "]" + next_line_L;
+
+		// Log.d("delta", delta);
+
+		for (int j = -1; j < argb.getHeight() + 1; j++) {
+			String line = "";
+			for (int i = -1; i < argb.getWidth() + 1; i++) {
+
+				Color color = argb.getValue(i, j);
+
+				// Log.d("gray", gray);
+
+				String val = palette(color.getGrayscaleValue());
+
+				// line = line + "[" + val + "]";
+				line = line + val + val;
+			}
+			result = result + line + next_line_L;
+		}
+		return result;
+	}
+
+	@Override
+	public ColorMap readGWTColorMap(File image_file) throws IOException {
+		FileInputStream is = image_file.newInputStream();
+		InputStream java_is = is.toJavaInputStream();
+		ColorMap map = this.newGWTColorMap(java_is);
+		java_is.close();
+		is.close();
+		return map;
+	}
 }
