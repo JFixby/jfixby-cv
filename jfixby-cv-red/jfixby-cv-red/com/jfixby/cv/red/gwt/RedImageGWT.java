@@ -12,11 +12,15 @@ import javax.imageio.ImageIO;
 
 import com.jfixby.cmns.api.collections.JUtils;
 import com.jfixby.cmns.api.color.Color;
+import com.jfixby.cmns.api.color.Colors;
 import com.jfixby.cmns.api.filesystem.File;
 import com.jfixby.cmns.api.filesystem.FileInputStream;
 import com.jfixby.cmns.api.filesystem.FileOutputStream;
+import com.jfixby.cmns.api.image.ArrayColorMap;
+import com.jfixby.cmns.api.image.ArrayColorMapSpecs;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.EditableColorMap;
+import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cv.api.gwt.ImageGWTComponent;
 
@@ -59,13 +63,28 @@ public class RedImageGWT implements ImageGWTComponent {
 	}
 
 	@Override
-	public GWTColorFunction newGWTColorMap(BufferedImage img) {
+	public ArrayColorMap newGWTColorMap(BufferedImage img) {
 		JUtils.checkNull(img);
-		return new GWTColorFunction(img);
+
+		ArrayColorMapSpecs specs = ImageProcessing.newArrayColorMapSpecs();
+		specs.setWidth(img.getWidth());
+		specs.setHeight(img.getHeight());
+		specs.setDefaultColor(Colors.BLACK());
+
+		ArrayColorMap array = ImageProcessing.newArrayColorMap(specs);
+
+		for (int j = 0; j < array.getHeight(); j++) {
+			for (int i = 0; i < array.getWidth(); i++) {
+				int rgb = img.getRGB(i, j);
+				array.setValue(i, j, Colors.newColor(rgb));
+			}
+		}
+
+		return array;
 	}
 
 	@Override
-	public GWTColorFunction newGWTColorMap(InputStream java_is) throws IOException {
+	public ArrayColorMap newGWTColorMap(InputStream java_is) throws IOException {
 		BufferedImage bad_image = ImageIO.read(java_is);
 		if (bad_image == null) {
 			L.d("Failed to read image", java_is);
@@ -164,10 +183,10 @@ public class RedImageGWT implements ImageGWTComponent {
 	}
 
 	@Override
-	public GWTColorFunction readGWTColorMap(File image_file) throws IOException {
+	public ArrayColorMap readGWTColorMap(File image_file) throws IOException {
 		FileInputStream is = image_file.newInputStream();
 		InputStream java_is = is.toJavaInputStream();
-		GWTColorFunction map = this.newGWTColorMap(java_is);
+		ArrayColorMap map = this.newGWTColorMap(java_is);
 		java_is.close();
 		is.close();
 		return map;

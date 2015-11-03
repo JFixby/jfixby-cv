@@ -1,6 +1,5 @@
 package com.jfixby.cv.api.lambda;
 
-import com.jfixby.cmns.api.floatn.FixedFloat2;
 import com.jfixby.cmns.api.geometry.Geometry;
 import com.jfixby.cmns.api.image.LambdaImage;
 import com.jfixby.cmns.api.math.FloatMath;
@@ -40,5 +39,5 @@ public class IMAGE_OPERATIONS {
 
 	public static final GOperator<LambdaImage> GRADIENT = f -> VECTOR_ADD.apply(VECTOR_MULTIPLY.apply(E0, ddx.apply(f)), VECTOR_MULTIPLY.apply(E1, ddy.apply(f)));
 
-	public static final VectorNorm<LambdaImage> VECTOR_NORM = v -> NORM.norm(v.at(0));
+	public static final VectorNorm<LambdaImage> VECTOR_NORM_2 = vector -> ADD.apply(SQUARE.apply(vector.at(0)), SQUARE.apply(vector.at(1)));
 }

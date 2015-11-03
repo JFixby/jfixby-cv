@@ -7,6 +7,7 @@ import com.jfixby.cmns.api.filesystem.File;
 import com.jfixby.cmns.api.filesystem.LocalFileSystem;
 import com.jfixby.cmns.api.geometry.Geometry;
 import com.jfixby.cmns.api.geometry.Rectangle;
+import com.jfixby.cmns.api.image.ArrayColorMap;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.image.LambdaColorMap;
@@ -15,12 +16,10 @@ import com.jfixby.cmns.api.image.LambdaImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.desktop.DesktopAssembler;
-import com.jfixby.cv.api.gwt.GwtColorMap;
 import com.jfixby.cv.api.gwt.ImageGWT;
 import com.jfixby.cv.api.lambda.IMAGE_OPERATIONS;
 import com.jfixby.cv.api.lambda.Vector;
 import com.jfixby.cv.red.gwt.RedImageGWT;
-import com.jfixby.cv.red.test.LambdaImage.F;
 
 public class ImageTest {
 
@@ -34,14 +33,19 @@ public class ImageTest {
 		LambdaImage grayscale = color_map.getGrayscale();
 
 		saveResult(grayscale, w, h, "bw.png");
-//		saveResult(IMAGE_OPERATIONS.INVERT.apply(IMAGE_OPERATIONS.ddx.apply(grayscale)), w, h, "ddx.png");
-//		saveResult(IMAGE_OPERATIONS.INVERT.apply(IMAGE_OPERATIONS.ddy.apply(grayscale)), w, h, "ddy.png");
+		// saveResult(IMAGE_OPERATIONS.INVERT.apply(IMAGE_OPERATIONS.ddx.apply(grayscale)),
+		// w, h, "ddx.png");
+		// saveResult(IMAGE_OPERATIONS.INVERT.apply(IMAGE_OPERATIONS.ddy.apply(grayscale)),
+		// w, h, "ddy.png");
 		saveResult(IMAGE_OPERATIONS.INVERT.apply(IMAGE_OPERATIONS.MULTIPLY.apply(sketchy(grayscale), xy -> 2f)), w, h, "sketchy.png");
 
 	}
 
 	private static LambdaImage sketchy(LambdaImage grayscale) {
-		return xy -> (float) FloatMath.pow(IMAGE_OPERATIONS.ADD.apply(IMAGE_OPERATIONS.SQUARE.apply(IMAGE_OPERATIONS.ddx.apply(grayscale)), IMAGE_OPERATIONS.SQUARE.apply(IMAGE_OPERATIONS.ddy.apply(grayscale))).value(xy), 0.5f);
+		Vector<LambdaImage> gradF = IMAGE_OPERATIONS.GRADIENT.apply(grayscale);
+		LambdaImage normGrad = IMAGE_OPERATIONS.VECTOR_NORM_2.norm(gradF);
+		return xy -> (float) FloatMath.pow(normGrad.value(xy), 0.5f);
+
 	}
 
 	private static void saveResult(LambdaImage image, int w, int h, String filename) throws IOException {
@@ -71,7 +75,7 @@ public class ImageTest {
 	private static ColorMap readImage(String file_name) throws IOException {
 		File image_file = LocalFileSystem.ApplicationHome().child(file_name);
 		L.d("reading", image_file);
-		GwtColorMap color_map = ImageGWT.readGWTColorMap(image_file);
+		ArrayColorMap color_map = ImageGWT.readGWTColorMap(image_file);
 		return color_map;
 	}
 }
