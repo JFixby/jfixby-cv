@@ -33,6 +33,7 @@ public class ImageTest {
 		int h = color_map.getHeight();
 		λFunction<FixedInt2, Color> λimage = color_map.getLambdaColoredImage();
 		final λFunction<FixedInt2, Color> grayscale = CV.grayScale(λimage);
+		
 
 		λFunction<FixedInt2, Color> wrapped_grayscale = Lambda.newFunction(xy -> grayscale.val(xy), CV.newImageCache(w, h));
 		saveResult(wrapped_grayscale, w, h, "bw.png");
