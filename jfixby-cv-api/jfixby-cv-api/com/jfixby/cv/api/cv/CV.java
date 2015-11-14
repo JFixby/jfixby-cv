@@ -1,6 +1,8 @@
 package com.jfixby.cv.api.cv;
 
+import com.jfixby.cmns.api.collections.Collection;
 import com.jfixby.cmns.api.color.Color;
+import com.jfixby.cmns.api.color.CustomColor;
 import com.jfixby.cmns.api.components.ComponentInstaller;
 import com.jfixby.cmns.api.lambda.λFunction;
 import com.jfixby.cmns.api.lambda.λFunctionCache;
@@ -36,6 +38,10 @@ public class CV {
 
 	public static λFunctionCache<FixedInt2, Color> newImageCache(int width, int height) {
 		return invoke().newImageCache(width, height);
+	}
+
+	public static void averageColor(Collection<Color> collectedColors, CustomColor average) {
+		invoke().averageColor(collectedColors, average);
 	}
 
 }

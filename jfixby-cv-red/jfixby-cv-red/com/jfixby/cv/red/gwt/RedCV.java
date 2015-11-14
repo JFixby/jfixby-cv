@@ -1,9 +1,11 @@
 package com.jfixby.cv.red.gwt;
 
+import com.jfixby.cmns.api.collections.Collection;
 import com.jfixby.cmns.api.collections.JUtils;
 import com.jfixby.cmns.api.collections.List;
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.Colors;
+import com.jfixby.cmns.api.color.CustomColor;
 import com.jfixby.cmns.api.floatn.FixedFloat2;
 import com.jfixby.cmns.api.floatn.Float2;
 import com.jfixby.cmns.api.geometry.Geometry;
@@ -137,6 +139,23 @@ public class RedCV implements CVComponent {
 			}
 		}
 		return points;
+	}
+
+	@Override
+	public void averageColor(Collection<Color> collectedColors, CustomColor average) {
+		JUtils.checkTrue("collectedColors.isEmpty()", collectedColors.size() != 0);
+		float r = 0;
+		float g = 0;
+		float b = 0;
+		for (Color color : collectedColors) {
+			r = r + color.red();
+			g = g + color.green();
+			b = b + color.blue();
+		}
+		r = r / collectedColors.size();
+		g = g / collectedColors.size();
+		b = b / collectedColors.size();
+		average.setRed(r).setBlue(b).setGreen(g).setAlpha(1);
 	}
 
 }
