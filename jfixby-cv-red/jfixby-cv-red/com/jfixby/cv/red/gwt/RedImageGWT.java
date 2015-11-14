@@ -26,7 +26,7 @@ import com.jfixby.cmns.api.image.ArrayColorMapSpecs;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.EditableColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
-import com.jfixby.cmns.api.image.LambdaImage;
+import com.jfixby.cmns.api.lambda.λFunction;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cv.api.gwt.ImageGWTComponent;
 
@@ -198,56 +198,4 @@ public class RedImageGWT implements ImageGWTComponent {
 		return map;
 	}
 
-	@Override
-	public LambdaImage BLUR(final LambdaImage input, final int radius, final Rectangle area) {
-		LambdaImage result = input;
-		for (int i = 0; i < radius; i++) {
-			result = blur(result, area);
-		}
-		return result;
-	}
-
-	private LambdaImage blur(final LambdaImage input, final Rectangle area) {
-		return XY -> {
-			final List<FixedFloat2> neighbours = collectPointsOfInterest(XY, 1, area);
-			return averageColor(neighbours, input);
-		};
-	}
-
-	static final public Color averageColor(List<FixedFloat2> points, LambdaImage input) {
-		if (points.size() == 0) {
-			throw new Error("Empty input");
-		}
-		float r = 0;
-		float g = 0;
-		float b = 0;
-		for (FixedFloat2 neighbour : points) {
-			Color color = input.value(neighbour);
-			r = r + color.red();
-			g = g + color.green();
-			b = b + color.blue();
-		}
-		r = r / points.size();
-		g = g / points.size();
-		b = b / points.size();
-		return Colors.newColor(r, g, b);
-	}
-
-	static final private List<FixedFloat2> collectPointsOfInterest(FixedFloat2 XY, float radius, Rectangle area) {
-		List<FixedFloat2> points = JUtils.newList();
-		double x0 = XY.getX();
-		double y0 = XY.getY();
-		for (double x = x0 - radius; x <= x0 + radius; x = x + 1f) {
-			for (double y = y0 - radius; y <= y0 + radius; y = y + 1f) {
-				Float2 other = Geometry.newFloat2(x, y);
-				float distance = (float) XY.distanceTo(other);
-				if (distance <= radius) {
-					if (area.containsPoint(other)) {
-						points.add(other);
-					}
-				}
-			}
-		}
-		return points;
-	}
 }

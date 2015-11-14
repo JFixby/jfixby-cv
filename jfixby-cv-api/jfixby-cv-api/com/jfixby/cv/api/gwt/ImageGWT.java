@@ -5,11 +5,9 @@ import java.io.IOException;
 
 import com.jfixby.cmns.api.components.ComponentInstaller;
 import com.jfixby.cmns.api.filesystem.File;
-import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ArrayColorMap;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.EditableColorMap;
-import com.jfixby.cmns.api.image.LambdaImage;
 
 public class ImageGWT {
 
@@ -50,10 +48,6 @@ public class ImageGWT {
 
 	public static ArrayColorMap readGWTColorMap(File image_file) throws IOException {
 		return invoke().readGWTColorMap(image_file);
-	}
-
-	public static LambdaImage BLUR(LambdaImage input, int radius, Rectangle area) {
-		return invoke().BLUR(input, radius, area);
 	}
 
 }
