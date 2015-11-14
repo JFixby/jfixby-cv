@@ -22,8 +22,16 @@ public class CV {
 		return componentInstaller.getComponent();
 	}
 
-	public static λFunction<FixedInt2, Color> grayScale(λFunction<FixedInt2, Color> λimage) {
-		return invoke().grayScale(λimage);
+	public static λFunction<FixedInt2, Color> grayScale(λFunction<FixedInt2, Color> input) {
+		return invoke().grayScale(input);
+	}
+
+	public static λFunction<FixedInt2, Color> invert(λFunction<FixedInt2, Color> input) {
+		return invoke().invert(input);
+	}
+
+	public static λFunction<FixedInt2, Color> blur(λFunction<FixedInt2, Color> input, float radius, float image_width, float image_height) {
+		return invoke().blur(input, radius, image_width, image_height);
 	}
 
 	public static λFunctionCache<FixedInt2, Color> newImageCache(int width, int height) {

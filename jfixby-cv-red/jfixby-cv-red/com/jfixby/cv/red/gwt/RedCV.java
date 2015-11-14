@@ -11,21 +11,80 @@ import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.lambda.λFunction;
 import com.jfixby.cmns.api.lambda.λFunctionCache;
 import com.jfixby.cmns.api.math.FixedInt2;
+import com.jfixby.cmns.api.math.FloatMath;
+import com.jfixby.cmns.api.math.Int2;
+import com.jfixby.cmns.api.math.IntegerMath;
 import com.jfixby.cv.api.cv.CVComponent;
+import com.jfixby.cv.api.cv.λOperator;
 
 public class RedCV implements CVComponent {
 
-	public λFunctionCache<FixedInt2, Color> newImageCache(int width, int height) {
-		return new RedImageCache(width, height);
+	static final private λOperator grayscale = (λimage, params) -> (xy -> {
+		Color color = λimage.val(xy);
+		float gray_value = color.getGrayscaleValue();
+		Color gray = Colors.newColor(gray_value, gray_value, gray_value);
+		return gray;
+	});
+	private final static Int2 tmp = IntegerMath.newInt2();
+
+	@Override
+	public λFunction<FixedInt2, Color> grayScale(λFunction<FixedInt2, Color> input) {
+		return grayscale.apply(input);
 	}
 
-	public λFunction<FixedInt2, Color> grayScale(λFunction<FixedInt2, Color> λimage) {
-		return xy -> {
-			Color color = λimage.val(xy);
-			float gray_value = color.getGrayscaleValue();
-			Color gray = Colors.newColor(gray_value, gray_value, gray_value);
-			return gray;
-		};
+	static final private λOperator invert = (λimage, params) -> (xy -> {
+		return λimage.val(xy).invert();
+	});
+
+	@Override
+	public λFunction<FixedInt2, Color> invert(λFunction<FixedInt2, Color> input) {
+		return invert.apply(input);
+	}
+
+	static final private λOperator blur = (λimage, params) -> (xy -> {
+		long radius = FloatMath.round(params[0]);
+		long W = FloatMath.round(params[1]);
+		long H = FloatMath.round(params[2]);
+		float r = 0;
+		float g = 0;
+		float b = 0;
+
+		final long x0 = xy.getX();
+		final long y0 = xy.getY();
+
+		int points = 0;
+
+		for (long x = x0 - radius; x <= x0 + radius; x = x + 1) {
+			for (long y = y0 - radius; y <= y0 + radius; y = y + 1) {
+				if (x >= 0 && x < W && y >= 0 && y < H) {
+					double distance = FloatMath.distance(x, y, x0, y0);
+					if (distance <= radius) {
+						tmp.setXY(x, y);
+						final Color color = λimage.val(tmp);
+						points++;
+						r = r + color.red();
+						g = g + color.green();
+						b = b + color.blue();
+					}
+				}
+			}
+		}
+		r = r / points;
+		g = g / points;
+		b = b / points;
+		final Color color_value = Colors.newColor(r, g, b);
+		return color_value;
+		// return Colors.BLACK();
+
+	});
+
+	@Override
+	public λFunction<FixedInt2, Color> blur(λFunction<FixedInt2, Color> input, float radius, float image_width, float image_height) {
+		return blur.apply(input, radius, image_width, image_height);
+	}
+
+	public λFunctionCache<FixedInt2, Color> newImageCache(int width, int height) {
+		return new RedImageCache(width, height);
 	}
 
 	public λFunction<FixedFloat2, Color> BLUR(final λFunction<FixedFloat2, Color> input, final int radius, final Rectangle area) {

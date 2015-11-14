@@ -7,8 +7,12 @@ import com.jfixby.cmns.api.math.FixedInt2;
 
 public interface CVComponent {
 
-	public λFunction<FixedInt2, Color> grayScale(λFunction<FixedInt2, Color> λimage);
+	λFunction<FixedInt2, Color> grayScale(λFunction<FixedInt2, Color> input);
 
-	public λFunctionCache<FixedInt2, Color> newImageCache(int width, int height);
+	λFunction<FixedInt2, Color> invert(λFunction<FixedInt2, Color> input);
+
+	λFunction<FixedInt2, Color> blur(λFunction<FixedInt2, Color> input, float radius, float image_width, float image_height);
+
+	λFunctionCache<FixedInt2, Color> newImageCache(int width, int height);
 
 }

@@ -31,12 +31,20 @@ public class ImageTest {
 		ColorMap color_map = readImage("input.png");
 		int w = color_map.getWidth();
 		int h = color_map.getHeight();
-		λFunction<FixedInt2, Color> λimage = color_map.getLambdaColoredImage();
-		final λFunction<FixedInt2, Color> grayscale = CV.grayScale(λimage);
-		
+		λFunction<FixedInt2, Color> λimage = color_map.getLambdaImage();
+		// λFunction<FixedInt2, Color> grayscale = CV.grayScale().apply(λimage);
+		// grayscale = Lambda.cache(grayscale, CV.newImageCache(w, h));
+		// grayscale = CV.invert().apply(grayscale);
+		λimage = CV.blur(λimage, 3f, w, h);
+		λimage = Lambda.cache(λimage, CV.newImageCache(w, h));
 
-		λFunction<FixedInt2, Color> wrapped_grayscale = Lambda.newFunction(xy -> grayscale.val(xy), CV.newImageCache(w, h));
-		saveResult(wrapped_grayscale, w, h, "bw.png");
+		// grayscale = CV.cache(grayscale,).apply(λimage);
+
+		// grayscale = Lambda.newFunction(xy -> grayscale.val(xy),
+		// CV.newImageCache(w, h));
+
+		saveResult(λimage, w, h, "bw.png");
+		saveResult(λimage, w, h, "bw2.png");
 		// saveResult(IMAGE_OPERATIONS.INVERT.apply(IMAGE_OPERATIONS.ddx.apply(grayscale)),
 		// w, h, "ddx.png");
 		// saveResult(IMAGE_OPERATIONS.INVERT.apply(IMAGE_OPERATIONS.ddy.apply(grayscale)),
