@@ -3,11 +3,13 @@ package com.jfixby.cv.api.gwt;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.filesystem.File;
+import com.jfixby.cmns.api.floatn.FixedFloat2;
 import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ArrayColorMap;
 import com.jfixby.cmns.api.image.ColorMap;
-import com.jfixby.cmns.api.image.LambdaImage;
+import com.jfixby.cmns.api.lambda.λFunction;
 
 public interface ImageGWTComponent {
 
@@ -23,6 +25,6 @@ public interface ImageGWTComponent {
 
 	ArrayColorMap readGWTColorMap(File image_file) throws IOException;
 
-	LambdaImage BLUR(LambdaImage input, int radius, Rectangle area);
+	
 
 }
