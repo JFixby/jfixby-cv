@@ -10,7 +10,6 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 
-import com.jfixby.cmns.api.collections.JUtils;
 import com.jfixby.cmns.api.collections.List;
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.Colors;
@@ -28,6 +27,7 @@ import com.jfixby.cmns.api.image.EditableColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.lambda.λFunction;
 import com.jfixby.cmns.api.log.L;
+import com.jfixby.cmns.api.util.JUtils;
 import com.jfixby.cv.api.gwt.ImageGWTComponent;
 
 public class RedImageGWT implements ImageGWTComponent {
