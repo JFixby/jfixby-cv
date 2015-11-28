@@ -10,31 +10,25 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 
-import com.jfixby.cmns.api.collections.List;
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.Colors;
+import com.jfixby.cmns.api.debug.Debug;
 import com.jfixby.cmns.api.filesystem.File;
 import com.jfixby.cmns.api.filesystem.FileInputStream;
 import com.jfixby.cmns.api.filesystem.FileOutputStream;
-import com.jfixby.cmns.api.floatn.FixedFloat2;
-import com.jfixby.cmns.api.floatn.Float2;
-import com.jfixby.cmns.api.geometry.Geometry;
-import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ArrayColorMap;
 import com.jfixby.cmns.api.image.ArrayColorMapSpecs;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.EditableColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
-import com.jfixby.cmns.api.lambda.λFunction;
 import com.jfixby.cmns.api.log.L;
-import com.jfixby.cmns.api.util.JUtils;
 import com.jfixby.cv.api.gwt.ImageGWTComponent;
 
 public class RedImageGWT implements ImageGWTComponent {
 
 	@Override
 	public BufferedImage readFromFile(File image_file) throws IOException {
-		JUtils.checkNull("image_file", image_file);
+		Debug.checkNull("image_file", image_file);
 		FileInputStream is = image_file.newInputStream();
 		InputStream java_is = is.toJavaInputStream();
 		BufferedImage bad_image = ImageIO.read(java_is);
@@ -53,9 +47,9 @@ public class RedImageGWT implements ImageGWTComponent {
 
 	@Override
 	public void writeToFile(java.awt.Image java_image, File file, String file_type) throws IOException {
-		JUtils.checkNull("java_image", java_image);
-		JUtils.checkNull("file", file);
-		JUtils.checkNull("file_type", file_type);
+		Debug.checkNull("java_image", java_image);
+		Debug.checkNull("file", file);
+		Debug.checkNull("file_type", file_type);
 		int width = java_image.getWidth(null);
 		int height = java_image.getHeight(null);
 		BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -70,7 +64,7 @@ public class RedImageGWT implements ImageGWTComponent {
 
 	@Override
 	public ArrayColorMap newGWTColorMap(BufferedImage img) {
-		JUtils.checkNull(img);
+		Debug.checkNull(img);
 
 		ArrayColorMapSpecs specs = ImageProcessing.newArrayColorMapSpecs();
 		specs.setWidth(img.getWidth());
