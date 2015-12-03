@@ -44,4 +44,8 @@ public class CV {
 		invoke().averageColor(collectedColors, average);
 	}
 
+	public static λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scalefactor) {
+		return invoke().scale(λimage, scalefactor);
+	}
+
 }
