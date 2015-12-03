@@ -166,4 +166,13 @@ public class RedCV implements CVComponent {
 		};
 		return scaled;
 	}
+
+	@Override
+	public λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scaleX, float scaleY) {
+		λFunction<FixedInt2, Color> scaled = xy -> {
+			final FixedInt2 scaled_xy = IntegerMath.newInt2(FloatMath.round(xy.getX() / scaleX), FloatMath.round(xy.getY() / scaleY));
+			return λimage.val(scaled_xy);
+		};
+		return scaled;
+	}
 }

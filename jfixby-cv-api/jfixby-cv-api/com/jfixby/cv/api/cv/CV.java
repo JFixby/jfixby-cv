@@ -48,4 +48,8 @@ public class CV {
 		return invoke().scale(λimage, scalefactor);
 	}
 
+	public static λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scaleX, float scaleY) {
+		return invoke().scale(λimage, scaleX, scaleY);
+	}
+
 }

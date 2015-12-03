@@ -17,8 +17,10 @@ public interface CVComponent {
 
 	λFunctionCache<FixedInt2, Color> newImageCache(int width, int height);
 
-	λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scalefactor);
-
 	void averageColor(Collection<Color> collectedColors, CustomColor average);
+
+	λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scaleX, float scaleY);
+
+	λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scalefactor);
 
 }
