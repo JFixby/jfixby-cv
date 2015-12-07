@@ -3,7 +3,6 @@ package com.jfixby.cv.red.test;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.filesystem.File;
 import com.jfixby.cmns.api.filesystem.LocalFileSystem;
 import com.jfixby.cmns.api.image.ArrayColorMap;
@@ -12,9 +11,8 @@ import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.image.LambdaColorMap;
 import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
 import com.jfixby.cmns.api.lambda.Lambda;
-import com.jfixby.cmns.api.lambda.λFunction;
+import com.jfixby.cmns.api.lambda.λImage;
 import com.jfixby.cmns.api.log.L;
-import com.jfixby.cmns.api.math.FixedInt2;
 import com.jfixby.cmns.desktop.DesktopAssembler;
 import com.jfixby.cv.api.cv.CV;
 import com.jfixby.cv.api.gwt.ImageGWT;
@@ -31,12 +29,12 @@ public class ImageTest {
 		ColorMap color_map = readImage("input.png");
 		int w = color_map.getWidth();
 		int h = color_map.getHeight();
-		λFunction<FixedInt2, Color> λimage = color_map.getLambdaImage();
-		// λFunction<FixedInt2, Color> grayscale = CV.grayScale().apply(λimage);
+		λImage λimage = color_map.getLambdaImage();
+		// λImage grayscale = CV.grayScale().apply(λimage);
 		// grayscale = Lambda.cache(grayscale, CV.newImageCache(w, h));
 		// grayscale = CV.invert().apply(grayscale);
 		λimage = CV.blur(λimage, 3f, w, h);
-		λimage = Lambda.cache(λimage, CV.newImageCache(w, h));
+		λimage = CV.cache(λimage, CV.newImageCache(w, h));
 
 		// grayscale = CV.cache(grayscale,).apply(λimage);
 
@@ -62,7 +60,7 @@ public class ImageTest {
 	//
 	// }
 
-	private static void saveResult(λFunction<FixedInt2, Color> image, int w, int h, String filename) throws IOException {
+	private static void saveResult(λImage image, int w, int h, String filename) throws IOException {
 
 		LambdaColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
 

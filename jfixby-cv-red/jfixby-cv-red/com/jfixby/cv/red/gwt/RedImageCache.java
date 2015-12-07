@@ -1,11 +1,10 @@
 package com.jfixby.cv.red.gwt;
 
 import com.jfixby.cmns.api.color.Color;
-import com.jfixby.cmns.api.lambda.λFunctionCache;
+import com.jfixby.cmns.api.lambda.λImageCache;
 import com.jfixby.cmns.api.log.L;
-import com.jfixby.cmns.api.math.FixedInt2;
 
-public class RedImageCache implements λFunctionCache<FixedInt2, Color> {
+public class RedImageCache implements λImageCache {
 
 	final private int width;
 	final private int height;
@@ -20,13 +19,13 @@ public class RedImageCache implements λFunctionCache<FixedInt2, Color> {
 	}
 
 	@Override
-	public Color get(FixedInt2 key) {
-		return this.array[(int) key.getX()][(int) key.getY()];
+	public Color get(float x, float y) {
+		return this.array[(int) x][(int) y];
 	}
 
 	@Override
-	public void put(FixedInt2 key, Color value) {
-		this.array[(int) key.getX()][(int) key.getY()] = value;
+	public void put(float x, float y, Color value) {
+		this.array[(int) x][(int) y] = value;
 	}
 
 	@Override

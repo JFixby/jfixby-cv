@@ -10,8 +10,8 @@ import com.jfixby.cmns.api.floatn.Float2;
 import com.jfixby.cmns.api.geometry.Geometry;
 import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.lambda.λFunction;
-import com.jfixby.cmns.api.lambda.λFunctionCache;
-import com.jfixby.cmns.api.math.FixedInt2;
+import com.jfixby.cmns.api.lambda.λImage;
+import com.jfixby.cmns.api.lambda.λImageCache;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.api.math.Int2;
 import com.jfixby.cmns.api.math.IntegerMath;
@@ -21,8 +21,8 @@ import com.jfixby.cv.api.cv.λOperator;
 
 public class RedCV implements CVComponent {
 
-	static final private λOperator grayscale = (λimage, params) -> (xy -> {
-		Color color = λimage.val(xy);
+	static final private λOperator grayscale = (λimage, params) -> ((x, y) -> {
+		Color color = λimage.val(x, y);
 		float gray_value = color.getGrayscaleValue();
 		Color gray = Colors.newColor(gray_value, gray_value, gray_value);
 		return gray;
@@ -30,20 +30,20 @@ public class RedCV implements CVComponent {
 	private final static Int2 tmp = IntegerMath.newInt2();
 
 	@Override
-	public λFunction<FixedInt2, Color> grayScale(λFunction<FixedInt2, Color> input) {
+	public λImage grayScale(λImage input) {
 		return grayscale.apply(input);
 	}
 
-	static final private λOperator invert = (λimage, params) -> (xy -> {
-		return λimage.val(xy).invert();
+	static final private λOperator invert = (λimage, params) -> ((x, y) -> {
+		return λimage.val(x, y).invert();
 	});
 
 	@Override
-	public λFunction<FixedInt2, Color> invert(λFunction<FixedInt2, Color> input) {
+	public λImage invert(λImage input) {
 		return invert.apply(input);
 	}
 
-	static final private λOperator blur = (λimage, params) -> (xy -> {
+	static final private λOperator blur = (λimage, params) -> ((X, Y) -> {
 		long radius = FloatMath.round(params[0]);
 		long W = FloatMath.round(params[1]);
 		long H = FloatMath.round(params[2]);
@@ -51,8 +51,8 @@ public class RedCV implements CVComponent {
 		float g = 0;
 		float b = 0;
 
-		final long x0 = xy.getX();
-		final long y0 = xy.getY();
+		final long x0 = (long) X;
+		final long y0 = (long) Y;
 
 		int points = 0;
 
@@ -61,8 +61,7 @@ public class RedCV implements CVComponent {
 				if (x >= 0 && x < W && y >= 0 && y < H) {
 					double distance = FloatMath.distance(x, y, x0, y0);
 					if (distance <= radius) {
-						tmp.setXY(x, y);
-						final Color color = λimage.val(tmp);
+						final Color color = λimage.val(x, y);
 						points++;
 						r = r + color.red();
 						g = g + color.green();
@@ -81,12 +80,8 @@ public class RedCV implements CVComponent {
 	});
 
 	@Override
-	public λFunction<FixedInt2, Color> blur(λFunction<FixedInt2, Color> input, float radius, float image_width, float image_height) {
+	public λImage blur(λImage input, float radius, float image_width, float image_height) {
 		return blur.apply(input, radius, image_width, image_height);
-	}
-
-	public λFunctionCache<FixedInt2, Color> newImageCache(int width, int height) {
-		return new RedImageCache(width, height);
 	}
 
 	public λFunction<FixedFloat2, Color> BLUR(final λFunction<FixedFloat2, Color> input, final int radius, final Rectangle area) {
@@ -159,20 +154,40 @@ public class RedCV implements CVComponent {
 	}
 
 	@Override
-	public λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scalefactor) {
-		λFunction<FixedInt2, Color> scaled = xy -> {
-			final FixedInt2 scaled_xy = IntegerMath.newInt2(FloatMath.round(xy.getX() / scalefactor), FloatMath.round(xy.getY() / scalefactor));
-			return λimage.val(scaled_xy);
+	public λImage scale(λImage λimage, float scalefactor) {
+
+		return scale(λimage, scalefactor, scalefactor);
+	}
+
+	@Override
+	public λImage scale(λImage λimage, float scaleX, float scaleY) {
+		λImage scaled = (x, y) -> {
+			// final FixedInt2 scaled_xy =
+			// IntegerMath.newInt2(FloatMath.floorDown(xy.getX() / scaleX),
+			// FloatMath.floorDown(xy.getY() / scaleY));
+			return λimage.val(x / scaleX, y / scaleY);
 		};
 		return scaled;
 	}
 
 	@Override
-	public λFunction<FixedInt2, Color> scale(λFunction<FixedInt2, Color> λimage, float scaleX, float scaleY) {
-		λFunction<FixedInt2, Color> scaled = xy -> {
-			final FixedInt2 scaled_xy = IntegerMath.newInt2(FloatMath.round(xy.getX() / scaleX), FloatMath.round(xy.getY() / scaleY));
-			return λimage.val(scaled_xy);
-		};
-		return scaled;
+	public λImageCache newImageCache(int width, int height) {
+		return new RedImageCache(width, height);
 	}
+
+	@Override
+	public λImage map(λImage λimage, Rectangle inputArea, Rectangle outputArea) {
+		return (x, y) -> {
+			Float2 input = Geometry.newFloat2(x, y);
+			inputArea.toRelative(input);
+			outputArea.toAbsolute(input);
+			return λimage.val((float) input.getX(), (float) input.getY());
+		};
+	}
+
+	@Override
+	public λImage cache(λImage image, λImageCache cache) {
+		return new RedCachedImage(image, cache);
+	}
+
 }
