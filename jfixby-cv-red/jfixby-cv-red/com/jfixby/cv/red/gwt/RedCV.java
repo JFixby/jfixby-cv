@@ -179,8 +179,8 @@ public class RedCV implements CVComponent {
 	public λImage map(λImage λimage, Rectangle inputArea, Rectangle outputArea) {
 		return (x, y) -> {
 			Float2 input = Geometry.newFloat2(x, y);
-			inputArea.toRelative(input);
-			outputArea.toAbsolute(input);
+			outputArea.toRelative(input);
+			inputArea.toAbsolute(input);
 			return λimage.val((float) input.getX(), (float) input.getY());
 		};
 	}
