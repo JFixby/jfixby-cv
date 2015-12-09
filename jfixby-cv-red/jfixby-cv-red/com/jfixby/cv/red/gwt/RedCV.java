@@ -1,11 +1,12 @@
 package com.jfixby.cv.red.gwt;
 
 import com.jfixby.cmns.api.collections.Collection;
-import com.jfixby.cmns.api.collections.JUtils;
+import com.jfixby.cmns.api.collections.Collections;
 import com.jfixby.cmns.api.collections.List;
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.Colors;
 import com.jfixby.cmns.api.color.CustomColor;
+import com.jfixby.cmns.api.debug.Debug;
 import com.jfixby.cmns.api.floatn.FixedFloat2;
 import com.jfixby.cmns.api.floatn.Float2;
 import com.jfixby.cmns.api.geometry.Geometry;
@@ -119,7 +120,7 @@ public class RedCV implements CVComponent {
 	}
 
 	static final private List<FixedFloat2> collectPointsOfInterest(FixedFloat2 XY, float radius, Rectangle area) {
-		List<FixedFloat2> points = JUtils.newList();
+		List<FixedFloat2> points = Collections.newList();
 		double x0 = XY.getX();
 		double y0 = XY.getY();
 		for (double x = x0 - radius; x <= x0 + radius; x = x + 1f) {
@@ -138,7 +139,7 @@ public class RedCV implements CVComponent {
 
 	@Override
 	public void averageColor(Collection<Color> collectedColors, CustomColor average) {
-		JUtils.checkTrue("collectedColors.isEmpty()", collectedColors.size() != 0);
+		Debug.checkTrue("collectedColors.isEmpty()", collectedColors.size() != 0);
 		float r = 0;
 		float g = 0;
 		float b = 0;
