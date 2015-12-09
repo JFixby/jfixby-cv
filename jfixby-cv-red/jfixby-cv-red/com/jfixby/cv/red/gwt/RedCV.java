@@ -1,6 +1,7 @@
 package com.jfixby.cv.red.gwt;
 
 import com.jfixby.cmns.api.collections.Collection;
+import com.jfixby.cmns.api.collections.JUtils;
 import com.jfixby.cmns.api.collections.List;
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.Colors;
@@ -15,7 +16,6 @@ import com.jfixby.cmns.api.lambda.λImageCache;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.api.math.Int2;
 import com.jfixby.cmns.api.math.IntegerMath;
-import com.jfixby.cmns.api.util.JUtils;
 import com.jfixby.cv.api.cv.CVComponent;
 import com.jfixby.cv.api.cv.λOperator;
 

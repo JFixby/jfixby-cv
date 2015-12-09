@@ -1,9 +1,9 @@
 package com.jfixby.cv.api.cv;
 
+import com.jfixby.cmns.api.ComponentInstaller;
 import com.jfixby.cmns.api.collections.Collection;
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.CustomColor;
-import com.jfixby.cmns.api.components.ComponentInstaller;
 import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.lambda.λImage;
 import com.jfixby.cmns.api.lambda.λImageCache;

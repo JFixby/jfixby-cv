@@ -3,8 +3,8 @@ package com.jfixby.cv.red.test;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import com.jfixby.cmns.api.filesystem.File;
-import com.jfixby.cmns.api.filesystem.LocalFileSystem;
+import com.jfixby.cmns.api.file.File;
+import com.jfixby.cmns.api.file.LocalFileSystem;
 import com.jfixby.cmns.api.image.ArrayColorMap;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
