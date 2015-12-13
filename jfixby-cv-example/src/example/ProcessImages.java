@@ -18,6 +18,7 @@ import com.jfixby.cmns.api.image.LambdaColorMap;
 import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
 import com.jfixby.cmns.api.lambda.λImage;
 import com.jfixby.cmns.api.log.L;
+import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.api.math.MathTools;
 import com.jfixby.cmns.api.math.Matrix;
 import com.jfixby.cmns.desktop.DesktopAssembler;
@@ -61,7 +62,6 @@ public class ProcessImages {
 
 		// --- Обрабатываем--------------------------
 		λImage result = process(image_1, image_2, output_image_size);
-		 result = CV.invert(result);
 
 		// --- Сохраняем результат -------------------
 		File result_file = output_folder.child("result.png");
@@ -111,21 +111,25 @@ public class ProcessImages {
 	}
 
 	private static void operate(int x, int y, float[] channels, Color color_1, Color color_2, Matrix operator) {
-		Matrix channes_1_2 = MathTools.newMatrix(1, 6);
-		channes_1_2.setValue(0, 0, color_1.red());
-		channes_1_2.setValue(0, 1, color_1.green());
-		channes_1_2.setValue(0, 2, color_1.blue());
-		channes_1_2.setValue(0, 3, color_2.red());
-		channes_1_2.setValue(0, 4, color_2.green());
-		channes_1_2.setValue(0, 5, color_2.blue());
 
-		Matrix result = MathTools.newMatrix(1, 3);
+		if (x % 3 == 0 && y % 2 == 0) {
+			channels[0] = (float) (color_2.red());
+			channels[1] = (float) (color_2.green());
+			channels[2] = (float) (color_2.blue());
+		} else {
+			if (x % 2 != 0 && y % 3 == 0) {
 
-		MathTools.multiplyAxB(operator, channes_1_2, result);
-		double sum = result.getValue(0, 0) + result.getValue(0, 1) + result.getValue(0, 2);
-		channels[0] = (float) (result.getValue(0, 0) / sum);
-		channels[1] = (float) (result.getValue(0, 1) / sum);
-		channels[2] = (float) (result.getValue(0, 2) / sum);
+				channels[0] = (float) (color_1.red() * color_2.red());
+				channels[1] = (float) (color_1.green() * color_2.green());
+				channels[2] = (float) (color_1.blue() * color_2.blue());
+
+			} else {
+				channels[0] = (float) FloatMath.power(color_1.red(), 0.5);
+				channels[1] = (float) (color_1.green());
+				channels[2] = (float) (color_1.blue());
+			}
+
+		}
 	}
 
 	private static float operation(Rectangle output_image_size, float x, float y, float a, float b) {
