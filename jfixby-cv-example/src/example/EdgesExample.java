@@ -50,8 +50,8 @@ public class EdgesExample {
 		// --- Обрабатываем--------------------------
 		λImage result = process(image_1, image_1_size);
 
-		// --- Добавим контрасту
-		result = square(result);
+		// --- Добавим яркости
+		result = bright(result);
 
 		// --- Инвертируем ----------------
 		// result = CV.invert(result); // для этого надо разкоментировать эту
@@ -64,7 +64,7 @@ public class EdgesExample {
 		// На выходе видны артефакты сжатия
 	}
 
-	private static λImage square(λImage image_1) {
+	private static λImage bright(λImage image_1) {
 		return (x, y) -> {
 			Color pixel = image_1.val(x, y);
 			float multiplier = 8;
