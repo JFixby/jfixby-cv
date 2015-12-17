@@ -44,7 +44,7 @@ public class EdgesExample {
 		Rectangle image_1_size = Geometry.newRectangle(color_map_1.getWidth(), color_map_1.getHeight());
 
 		// --- Обрабатываем--------------------------
-		λImage result = process(image_1, image_1_size);
+		λImage result = производная(image_1, image_1_size);
 
 		// --- Добавим яркости
 		result = bright(result);
@@ -82,20 +82,20 @@ public class EdgesExample {
 		};
 	}
 
-	private static λImage process(λImage image_1, Rectangle image_1_size) {
+	public static λImage производная(λImage image_1, Rectangle image_1_size) {
 		return (x, y) -> {
 
 			// Модули производных по x и y для красного канала
-			double Rx = FloatMath.abs(image_1.val(x + 1, y).red() - image_1.val(x - 1, y).red()) / 2;
-			double Ry = FloatMath.abs(image_1.val(x, y + 1).red() - image_1.val(x, y - 1).red()) / 2;
+			double Rx = abs(image_1.val(x + 1, y).red() - image_1.val(x - 1, y).red()) / 2;
+			double Ry = abs(image_1.val(x, y + 1).red() - image_1.val(x, y - 1).red()) / 2;
 
 			// для зелёного
-			double Gx = FloatMath.abs(image_1.val(x + 1, y).green() - image_1.val(x - 1, y).green()) / 2;
-			double Gy = FloatMath.abs(image_1.val(x, y + 1).green() - image_1.val(x, y - 1).green()) / 2;
+			double Gx = abs(image_1.val(x + 1, y).green() - image_1.val(x - 1, y).green()) / 2;
+			double Gy = abs(image_1.val(x, y + 1).green() - image_1.val(x, y - 1).green()) / 2;
 
 			// и для синего
-			double Bx = FloatMath.abs(image_1.val(x + 1, y).blue() - image_1.val(x - 1, y).blue()) / 2;
-			double By = FloatMath.abs(image_1.val(x, y + 1).blue() - image_1.val(x, y - 1).blue()) / 2;
+			double Bx = abs(image_1.val(x + 1, y).blue() - image_1.val(x - 1, y).blue()) / 2;
+			double By = abs(image_1.val(x, y + 1).blue() - image_1.val(x, y - 1).blue()) / 2;
 
 			double R = Rx + Ry;
 			double G = Gx + Gy;
@@ -104,6 +104,10 @@ public class EdgesExample {
 			return Colors.newColor((float) R, (float) G, (float) B);
 
 		};
+	}
+
+	private static double abs(double f) {
+		return FloatMath.abs(f);
 	}
 
 	private static void saveResult(λImage image, Rectangle output_image_size, File output_image_file) throws IOException {
