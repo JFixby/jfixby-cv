@@ -102,7 +102,6 @@ public class EdgesExample {
 			double B = Bx + By;
 
 			return Colors.newColor((float) R, (float) G, (float) B);
-
 		};
 	}
 
