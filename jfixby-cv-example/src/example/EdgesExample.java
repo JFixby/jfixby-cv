@@ -82,20 +82,20 @@ public class EdgesExample {
 		};
 	}
 
-	public static λImage производная(λImage image_1, Rectangle image_1_size) {
+	public static λImage производная(λImage input_image, Rectangle input_image_dimentions) {
 		return (x, y) -> {
 
 			// Модули производных по x и y для красного канала
-			double Rx = abs(image_1.val(x + 1, y).red() - image_1.val(x - 1, y).red()) / 2;
-			double Ry = abs(image_1.val(x, y + 1).red() - image_1.val(x, y - 1).red()) / 2;
+			double Rx = abs(input_image.val(x + 1, y).red() - input_image.val(x - 1, y).red()) / 2;
+			double Ry = abs(input_image.val(x, y + 1).red() - input_image.val(x, y - 1).red()) / 2;
 
 			// для зелёного
-			double Gx = abs(image_1.val(x + 1, y).green() - image_1.val(x - 1, y).green()) / 2;
-			double Gy = abs(image_1.val(x, y + 1).green() - image_1.val(x, y - 1).green()) / 2;
+			double Gx = abs(input_image.val(x + 1, y).green() - input_image.val(x - 1, y).green()) / 2;
+			double Gy = abs(input_image.val(x, y + 1).green() - input_image.val(x, y - 1).green()) / 2;
 
 			// и для синего
-			double Bx = abs(image_1.val(x + 1, y).blue() - image_1.val(x - 1, y).blue()) / 2;
-			double By = abs(image_1.val(x, y + 1).blue() - image_1.val(x, y - 1).blue()) / 2;
+			double Bx = abs(input_image.val(x + 1, y).blue() - input_image.val(x - 1, y).blue()) / 2;
+			double By = abs(input_image.val(x, y + 1).blue() - input_image.val(x, y - 1).blue()) / 2;
 
 			double R = Rx + Ry;
 			double G = Gx + Gy;
