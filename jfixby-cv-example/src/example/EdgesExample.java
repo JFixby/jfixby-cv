@@ -39,12 +39,8 @@ public class EdgesExample {
 
 		ColorMap color_map_1 = readImage(file_1);
 
-		// ---Конвертируем пикчи в λ-изображение---------------
-
+		// ---Конвертируем пикчу в λ-изображение---------------
 		λImage image_1 = color_map_1.getLambdaImage();
-
-		// ---Поменяем все размеры пикч на 512x512-------------
-
 		Rectangle image_1_size = Geometry.newRectangle(color_map_1.getWidth(), color_map_1.getHeight());
 
 		// --- Обрабатываем--------------------------
