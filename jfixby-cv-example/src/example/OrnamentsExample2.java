@@ -70,7 +70,7 @@ public class OrnamentsExample2 {
 
 	}
 
-	private static λBinaryImage generatePattern(int W, int H) {
+	static λBinaryImage generatePattern(int W, int H) {
 
 		int img_center_horizontal = W / 2;
 		int img_center_vertical = H / 2;
