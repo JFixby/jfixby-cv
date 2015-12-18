@@ -39,12 +39,12 @@ public class OrnamentsExample {
 		image_dimentions.setOriginRelative(0.5, 0.5);
 
 		// ---Список "интересных" параметров
-		List<Integer> interesting = Collections.newList(3 * 2 * 2, 3 * 2 * 2 * 2);
+//		List<Integer> interesting = Collections.newList(3 * 2 * 2, 3 * 2 * 2 * 2);
 
-		for (int divisor = 0; divisor < interesting.size(); divisor++) {
+		for (int divisor = 2; divisor < 30; divisor++) {
 
 			// --- Создаём текстуру--------------------------
-			int DIV = interesting.getElementAt(divisor);
+			int DIV = divisor;
 			λBinaryImage pattern = generatePattern(W, H, DIV);
 
 			// --- Раскрашиваем её ---------------------------
@@ -76,6 +76,14 @@ public class OrnamentsExample {
 		result = XOR.apply(result, div(16));
 		result = XOR.apply(result, div(8));
 		result = XOR.apply(result, div(DIV));
+
+		final λBinaryImage tmp = result;
+
+		result = (x, y) -> {
+			int offset_x = (y / DIV) * DIV;
+			int offset_y = (x / DIV) * DIV;
+			return tmp.valueAt(x + offset_x, y + offset_y);
+		};
 
 		return result;
 	}
