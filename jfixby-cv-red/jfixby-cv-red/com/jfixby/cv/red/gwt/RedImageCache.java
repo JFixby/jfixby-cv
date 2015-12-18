@@ -1,7 +1,7 @@
 package com.jfixby.cv.red.gwt;
 
 import com.jfixby.cmns.api.color.Color;
-import com.jfixby.cmns.api.lambda.λImageCache;
+import com.jfixby.cmns.api.lambda.img.λImageCache;
 import com.jfixby.cmns.api.log.L;
 
 public class RedImageCache implements λImageCache {

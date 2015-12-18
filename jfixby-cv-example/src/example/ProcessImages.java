@@ -16,7 +16,7 @@ import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.image.LambdaColorMap;
 import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
-import com.jfixby.cmns.api.lambda.λImage;
+import com.jfixby.cmns.api.lambda.img.λImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.api.math.MathTools;
@@ -86,8 +86,8 @@ public class ProcessImages {
 		}
 
 		return (x, y) -> {
-			Color color_1 = image_1.val(x, y);
-			Color color_2 = image_2.val(x, y);
+			Color color_1 = image_1.valueAt(x, y);
+			Color color_2 = image_2.valueAt(x, y);
 
 			int x_i = (int) x;
 			int y_i = (int) y;

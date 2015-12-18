@@ -12,8 +12,8 @@ import com.jfixby.cmns.api.floatn.Float2;
 import com.jfixby.cmns.api.geometry.Geometry;
 import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.lambda.λFunction;
-import com.jfixby.cmns.api.lambda.λImage;
-import com.jfixby.cmns.api.lambda.λImageCache;
+import com.jfixby.cmns.api.lambda.img.λImage;
+import com.jfixby.cmns.api.lambda.img.λImageCache;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.api.math.Int2;
 import com.jfixby.cmns.api.math.IntegerMath;
@@ -23,7 +23,7 @@ import com.jfixby.cv.api.cv.λOperator;
 public class RedCV implements CVComponent {
 
 	static final private λOperator grayscale = (λimage, params) -> ((x, y) -> {
-		Color color = λimage.val(x, y);
+		Color color = λimage.valueAt(x, y);
 		float gray_value = color.getGrayscaleValue();
 		Color gray = Colors.newColor(gray_value, gray_value, gray_value);
 		return gray;
@@ -36,7 +36,7 @@ public class RedCV implements CVComponent {
 	}
 
 	static final private λOperator invert = (λimage, params) -> ((x, y) -> {
-		return λimage.val(x, y).invert();
+		return λimage.valueAt(x, y).invert();
 	});
 
 	@Override
@@ -62,7 +62,7 @@ public class RedCV implements CVComponent {
 				if (x >= 0 && x < W && y >= 0 && y < H) {
 					double distance = FloatMath.distance(x, y, x0, y0);
 					if (distance <= radius) {
-						final Color color = λimage.val(x, y);
+						final Color color = λimage.valueAt(x, y);
 						points++;
 						r = r + color.red();
 						g = g + color.green();
@@ -166,7 +166,7 @@ public class RedCV implements CVComponent {
 			// final FixedInt2 scaled_xy =
 			// IntegerMath.newInt2(FloatMath.floorDown(xy.getX() / scaleX),
 			// FloatMath.floorDown(xy.getY() / scaleY));
-			return λimage.val(x / scaleX, y / scaleY);
+			return λimage.valueAt(x / scaleX, y / scaleY);
 		};
 		return scaled;
 	}
@@ -182,7 +182,7 @@ public class RedCV implements CVComponent {
 			Float2 input = Geometry.newFloat2(x, y);
 			outputArea.toRelative(input);
 			inputArea.toAbsolute(input);
-			return λimage.val((float) input.getX(), (float) input.getY());
+			return λimage.valueAt((float) input.getX(), (float) input.getY());
 		};
 	}
 

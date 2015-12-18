@@ -11,7 +11,7 @@ import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.image.LambdaColorMap;
 import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
 import com.jfixby.cmns.api.lambda.Lambda;
-import com.jfixby.cmns.api.lambda.λImage;
+import com.jfixby.cmns.api.lambda.img.λImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.desktop.DesktopAssembler;
 import com.jfixby.cv.api.cv.CV;

@@ -14,7 +14,7 @@ import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.image.LambdaColorMap;
 import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
-import com.jfixby.cmns.api.lambda.λImage;
+import com.jfixby.cmns.api.lambda.img.λImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.desktop.DesktopAssembler;
 import com.jfixby.cv.api.cv.CV;
@@ -66,8 +66,8 @@ public class MultiplyImages {
 	private static λImage process(final λImage image_1, final λImage image_2, Rectangle output_image_size) {
 
 		return (x, y) -> {
-			Color color_2 = image_1.val(x, y);
-			Color color_1 = image_2.val(x, y);
+			Color color_2 = image_1.valueAt(x, y);
+			Color color_1 = image_2.valueAt(x, y);
 
 			double red = color_1.red() * color_2.red();
 			double green = color_1.green() * color_2.green();

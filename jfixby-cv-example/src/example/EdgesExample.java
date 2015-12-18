@@ -14,7 +14,7 @@ import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.image.LambdaColorMap;
 import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
-import com.jfixby.cmns.api.lambda.λImage;
+import com.jfixby.cmns.api.lambda.img.λImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.desktop.DesktopAssembler;
@@ -62,7 +62,7 @@ public class EdgesExample {
 
 	private static λImage bright(λImage image_1) {
 		return (x, y) -> {
-			Color pixel = image_1.val(x, y);
+			Color pixel = image_1.valueAt(x, y);
 			float multiplier = 8;
 			double R = pixel.red() * multiplier;
 			double G = pixel.green() * multiplier;
@@ -86,16 +86,16 @@ public class EdgesExample {
 		return (x, y) -> {
 
 			// Модули производных по x и y для красного канала
-			double Rx = abs(input_image.val(x + 1, y).red() - input_image.val(x - 1, y).red()) / 2;
-			double Ry = abs(input_image.val(x, y + 1).red() - input_image.val(x, y - 1).red()) / 2;
+			double Rx = abs(input_image.valueAt(x + 1, y).red() - input_image.valueAt(x - 1, y).red()) / 2;
+			double Ry = abs(input_image.valueAt(x, y + 1).red() - input_image.valueAt(x, y - 1).red()) / 2;
 
 			// для зелёного
-			double Gx = abs(input_image.val(x + 1, y).green() - input_image.val(x - 1, y).green()) / 2;
-			double Gy = abs(input_image.val(x, y + 1).green() - input_image.val(x, y - 1).green()) / 2;
+			double Gx = abs(input_image.valueAt(x + 1, y).green() - input_image.valueAt(x - 1, y).green()) / 2;
+			double Gy = abs(input_image.valueAt(x, y + 1).green() - input_image.valueAt(x, y - 1).green()) / 2;
 
 			// и для синего
-			double Bx = abs(input_image.val(x + 1, y).blue() - input_image.val(x - 1, y).blue()) / 2;
-			double By = abs(input_image.val(x, y + 1).blue() - input_image.val(x, y - 1).blue()) / 2;
+			double Bx = abs(input_image.valueAt(x + 1, y).blue() - input_image.valueAt(x - 1, y).blue()) / 2;
+			double By = abs(input_image.valueAt(x, y + 1).blue() - input_image.valueAt(x, y - 1).blue()) / 2;
 
 			double R = Rx + Ry;
 			double G = Gx + Gy;
