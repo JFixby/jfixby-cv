@@ -3,7 +3,6 @@ package example;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import com.jfixby.cmns.api.angles.Angles;
 import com.jfixby.cmns.api.collections.Collections;
 import com.jfixby.cmns.api.collections.List;
 import com.jfixby.cmns.api.color.Colors;
@@ -18,8 +17,6 @@ import com.jfixby.cmns.api.lambda.img.λImage;
 import com.jfixby.cmns.api.lambda.img.bin.λBinaryImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
-import com.jfixby.cmns.api.math.MathTools;
-import com.jfixby.cmns.api.math.VectorTool;
 import com.jfixby.cmns.desktop.DesktopAssembler;
 import com.jfixby.cv.api.cv.CV;
 import com.jfixby.cv.api.gwt.ImageGWT;

@@ -1,6 +1,5 @@
 package example;
 
-import com.jfixby.cmns.api.log.L;
 
 public class BooleanArray {
 
