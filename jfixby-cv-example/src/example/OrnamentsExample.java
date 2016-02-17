@@ -16,11 +16,11 @@ import com.jfixby.cmns.api.lambda.img.bin.λBinaryImage;
 import com.jfixby.cmns.api.lambda.img.bin.λBinaryImageOperation;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
-import com.jfixby.cmns.desktop.DesktopAssembler;
 import com.jfixby.cv.api.cv.CV;
 import com.jfixby.cv.api.gwt.ImageGWT;
 import com.jfixby.cv.red.gwt.RedCV;
 import com.jfixby.cv.red.gwt.RedImageGWT;
+import com.jfixby.red.desktop.DesktopAssembler;
 
 public class OrnamentsExample {
 
