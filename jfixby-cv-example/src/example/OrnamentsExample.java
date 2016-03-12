@@ -4,30 +4,30 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import com.jfixby.cmns.api.color.Colors;
+import com.jfixby.cmns.api.desktop.ImageAWT;
 import com.jfixby.cmns.api.file.File;
 import com.jfixby.cmns.api.file.LocalFileSystem;
 import com.jfixby.cmns.api.geometry.Geometry;
 import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ImageProcessing;
-import com.jfixby.cmns.api.image.LambdaColorMap;
-import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
-import com.jfixby.cmns.api.lambda.img.λImage;
+import com.jfixby.cmns.api.image.ColorMap;
+import com.jfixby.cmns.api.image.ColorMapSpecs;
+import com.jfixby.cmns.api.image.ColoredλImage;
 import com.jfixby.cmns.api.lambda.img.bin.λBinaryImage;
 import com.jfixby.cmns.api.lambda.img.bin.λBinaryImageOperation;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
-import com.jfixby.cv.api.cv.CV;
-import com.jfixby.cv.api.gwt.ImageGWT;
-import com.jfixby.cv.red.gwt.RedCV;
-import com.jfixby.cv.red.gwt.RedImageGWT;
+import com.jfixby.cv.api.CV;
+import com.jfixby.cv.red.awt.RedCV;
 import com.jfixby.red.desktop.DesktopAssembler;
+import com.jfixby.red.desktop.image.RedImageAWT;
 
 public class OrnamentsExample {
 
 	public static void main(String[] args) throws IOException {
 		// ---Устанавливаем и инициализируем компоненты------------
 		DesktopAssembler.setup();
-		ImageGWT.installComponent(new RedImageGWT());
+		ImageAWT.installComponent(new RedImageAWT());
 		CV.installComponent(new RedCV());
 
 		// ---Задаём размер изображения-----------------------------
@@ -46,7 +46,7 @@ public class OrnamentsExample {
 			λBinaryImage pattern = generatePattern(W, H, DIV);
 
 			// --- Раскрашиваем её ---------------------------
-			λImage result = (x, y) -> {
+			ColoredλImage result = (x, y) -> {
 				int X = (int) FloatMath.round(x);
 				int Y = (int) FloatMath.round(y);
 				if (pattern.valueAt(X, Y)) {
@@ -92,17 +92,17 @@ public class OrnamentsExample {
 
 	static λBinaryImageOperation XOR = (a, b) -> (x, y) -> a.valueAt(x, y) ^ b.valueAt(x, y);
 
-	private static void saveResult(λImage image, Rectangle output_image_size, File output_image_file) throws IOException {
-		LambdaColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
+	private static void saveResult(ColoredλImage image, Rectangle output_image_size, File output_image_file) throws IOException {
+		ColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
 		int w = (int) output_image_size.getWidth();
 		int h = (int) output_image_size.getHeight();
 		lambda_specs.setColorMapWidth(w);
 		lambda_specs.setColorMapHeight(h);
 		lambda_specs.setLambdaColoredImage(image);
-		LambdaColorMap color_map = ImageProcessing.newLambdaColorMap(lambda_specs);
-		BufferedImage gwt_bw = ImageGWT.toGWTImage(color_map);
+		ColorMap color_map = ImageProcessing.newColorMap(lambda_specs);
+		BufferedImage gwt_bw = ImageAWT.toAWTImage(color_map);
 		L.d("writing", output_image_file);
-		ImageGWT.writeToFile(gwt_bw, output_image_file, "png");
+		ImageAWT.writeToFile(gwt_bw, output_image_file, "png");
 	}
 
 }

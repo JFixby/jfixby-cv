@@ -7,6 +7,7 @@ import java.util.Random;
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.Colors;
 import com.jfixby.cmns.api.color.CustomColor;
+import com.jfixby.cmns.api.desktop.ImageAWT;
 import com.jfixby.cmns.api.file.File;
 import com.jfixby.cmns.api.file.LocalFileSystem;
 import com.jfixby.cmns.api.geometry.Geometry;
@@ -14,18 +15,17 @@ import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ArrayColorMap;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
-import com.jfixby.cmns.api.image.LambdaColorMap;
-import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
-import com.jfixby.cmns.api.lambda.img.λImage;
+import com.jfixby.cmns.api.image.ColorMap;
+import com.jfixby.cmns.api.image.ColorMapSpecs;
+import com.jfixby.cmns.api.image.ColoredλImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.api.math.MathTools;
 import com.jfixby.cmns.api.math.Matrix;
-import com.jfixby.cv.api.cv.CV;
-import com.jfixby.cv.api.gwt.ImageGWT;
-import com.jfixby.cv.red.gwt.RedCV;
-import com.jfixby.cv.red.gwt.RedImageGWT;
+import com.jfixby.cv.api.CV;
+import com.jfixby.cv.red.awt.RedCV;
 import com.jfixby.red.desktop.DesktopAssembler;
+import com.jfixby.red.desktop.image.RedImageAWT;
 
 public class ProcessImages {
 
@@ -33,7 +33,7 @@ public class ProcessImages {
 
 		// ---Устанавливаем и инициализируем компоненты------------
 		DesktopAssembler.setup();
-		ImageGWT.installComponent(new RedImageGWT());
+		ImageAWT.installComponent(new RedImageAWT());
 		CV.installComponent(new RedCV());
 
 		// ---Читаем файлы-----------------------------
@@ -48,8 +48,8 @@ public class ProcessImages {
 
 		// ---Конвертируем пикчи в λ-изображения---------------
 
-		λImage image_1 = color_map_1.getLambdaImage();
-		λImage image_2 = color_map_2.getLambdaImage();
+		ColoredλImage image_1 = color_map_1.getLambdaImage();
+		ColoredλImage image_2 = color_map_2.getLambdaImage();
 
 		// ---Поменяем все размеры пикч на 512x512-------------
 
@@ -61,14 +61,14 @@ public class ProcessImages {
 		image_2 = CV.map(image_2, image_2_size, output_image_size);
 
 		// --- Обрабатываем--------------------------
-		λImage result = process(image_1, image_2, output_image_size);
+		ColoredλImage result = process(image_1, image_2, output_image_size);
 
 		// --- Сохраняем результат -------------------
 		File result_file = output_folder.child("result.png");
 		saveResult(result, output_image_size, result_file);
 	}
 
-	private static λImage process(final λImage image_1, final λImage image_2, Rectangle output_image_size) {
+	private static ColoredλImage process(final ColoredλImage image_1, final ColoredλImage image_2, Rectangle output_image_size) {
 
 		long seed = System.currentTimeMillis();
 		L.d("seed", seed);
@@ -151,22 +151,22 @@ public class ProcessImages {
 
 	private static ColorMap readImage(File image_file) throws IOException {
 		L.d("reading", image_file);
-		ArrayColorMap color_map = ImageGWT.readGWTColorMap(image_file);
+		ArrayColorMap color_map = ImageAWT.readAWTColorMap(image_file);
 		return color_map;
 	}
 
-	private static void saveResult(λImage image, Rectangle output_image_size, File output_image_file) throws IOException {
+	private static void saveResult(ColoredλImage image, Rectangle output_image_size, File output_image_file) throws IOException {
 
-		LambdaColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
+		ColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
 		int w = (int) output_image_size.getWidth();
 		int h = (int) output_image_size.getHeight();
 		lambda_specs.setColorMapWidth(w);
 		lambda_specs.setColorMapHeight(h);
 		lambda_specs.setLambdaColoredImage(image);
-		LambdaColorMap color_map = ImageProcessing.newLambdaColorMap(lambda_specs);
-		BufferedImage gwt_bw = ImageGWT.toGWTImage(color_map);
+		ColorMap color_map = ImageProcessing.newColorMap(lambda_specs);
+		BufferedImage gwt_bw = ImageAWT.toAWTImage(color_map);
 		L.d("writing", output_image_file);
-		ImageGWT.writeToFile(gwt_bw, output_image_file, "png");
+		ImageAWT.writeToFile(gwt_bw, output_image_file, "png");
 	}
 
 }

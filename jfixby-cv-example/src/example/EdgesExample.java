@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.Colors;
+import com.jfixby.cmns.api.desktop.ImageAWT;
 import com.jfixby.cmns.api.file.File;
 import com.jfixby.cmns.api.file.LocalFileSystem;
 import com.jfixby.cmns.api.geometry.Geometry;
@@ -12,23 +13,22 @@ import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ArrayColorMap;
 import com.jfixby.cmns.api.image.ColorMap;
 import com.jfixby.cmns.api.image.ImageProcessing;
-import com.jfixby.cmns.api.image.LambdaColorMap;
-import com.jfixby.cmns.api.image.LambdaColorMapSpecs;
-import com.jfixby.cmns.api.lambda.img.λImage;
+import com.jfixby.cmns.api.image.ColorMap;
+import com.jfixby.cmns.api.image.ColorMapSpecs;
+import com.jfixby.cmns.api.image.ColoredλImage;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
-import com.jfixby.cv.api.cv.CV;
-import com.jfixby.cv.api.gwt.ImageGWT;
-import com.jfixby.cv.red.gwt.RedCV;
-import com.jfixby.cv.red.gwt.RedImageGWT;
+import com.jfixby.cv.api.CV;
+import com.jfixby.cv.red.awt.RedCV;
 import com.jfixby.red.desktop.DesktopAssembler;
+import com.jfixby.red.desktop.image.RedImageAWT;
 
 public class EdgesExample {
 
 	public static void main(String[] args) throws IOException {
 		// ---Устанавливаем и инициализируем компоненты------------
 		DesktopAssembler.setup();
-		ImageGWT.installComponent(new RedImageGWT());
+		ImageAWT.installComponent(new RedImageAWT());
 		CV.installComponent(new RedCV());
 
 		// ---Читаем файлы-----------------------------
@@ -40,11 +40,11 @@ public class EdgesExample {
 		ColorMap color_map_1 = readImage(file_1);
 
 		// ---Конвертируем пикчу в λ-изображение---------------
-		λImage image_1 = color_map_1.getLambdaImage();
+		ColoredλImage image_1 = color_map_1.getLambdaImage();
 		Rectangle image_1_size = Geometry.newRectangle(color_map_1.getWidth(), color_map_1.getHeight());
 
 		// --- Обрабатываем--------------------------
-		λImage result = производная(image_1, image_1_size);
+		ColoredλImage result = производная(image_1, image_1_size);
 
 		// --- Добавим яркости
 		result = bright(result);
@@ -60,7 +60,7 @@ public class EdgesExample {
 		// На выходе видны артефакты сжатия
 	}
 
-	private static λImage bright(λImage image_1) {
+	private static ColoredλImage bright(ColoredλImage image_1) {
 		return (x, y) -> {
 			Color pixel = image_1.valueAt(x, y);
 			float multiplier = 8;
@@ -82,7 +82,7 @@ public class EdgesExample {
 		};
 	}
 
-	public static λImage производная(λImage input_image, Rectangle input_image_dimentions) {
+	public static ColoredλImage производная(ColoredλImage input_image, Rectangle input_image_dimentions) {
 		return (x, y) -> {
 
 			// Модули производных по x и y для красного канала
@@ -109,23 +109,23 @@ public class EdgesExample {
 		return FloatMath.abs(f);
 	}
 
-	private static void saveResult(λImage image, Rectangle output_image_size, File output_image_file) throws IOException {
+	private static void saveResult(ColoredλImage image, Rectangle output_image_size, File output_image_file) throws IOException {
 
-		LambdaColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
+		ColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
 		int w = (int) output_image_size.getWidth();
 		int h = (int) output_image_size.getHeight();
 		lambda_specs.setColorMapWidth(w);
 		lambda_specs.setColorMapHeight(h);
 		lambda_specs.setLambdaColoredImage(image);
-		LambdaColorMap color_map = ImageProcessing.newLambdaColorMap(lambda_specs);
-		BufferedImage gwt_bw = ImageGWT.toGWTImage(color_map);
+		ColorMap color_map = ImageProcessing.newColorMap(lambda_specs);
+		BufferedImage gwt_bw = ImageAWT.toAWTImage(color_map);
 		L.d("writing", output_image_file);
-		ImageGWT.writeToFile(gwt_bw, output_image_file, "png");
+		ImageAWT.writeToFile(gwt_bw, output_image_file, "png");
 	}
 
 	private static ColorMap readImage(File image_file) throws IOException {
 		L.d("reading", image_file);
-		ArrayColorMap color_map = ImageGWT.readGWTColorMap(image_file);
+		ArrayColorMap color_map = ImageAWT.readAWTColorMap(image_file);
 		return color_map;
 	}
 
