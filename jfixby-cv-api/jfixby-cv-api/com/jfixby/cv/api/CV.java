@@ -52,8 +52,6 @@ public class CV {
 	return invoke().map(λimage, inputArea, outputArea);
     }
 
-    public static ColoredλImage cache(ColoredλImage image, ColoredλImageCache cache) {
-	return invoke().cache(image, cache);
-    }
+    
 
 }

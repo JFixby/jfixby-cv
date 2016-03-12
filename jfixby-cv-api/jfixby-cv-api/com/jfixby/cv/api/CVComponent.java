@@ -5,7 +5,6 @@ import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.CustomColor;
 import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ColoredλImage;
-import com.jfixby.cmns.api.image.ColoredλImageCache;
 
 public interface CVComponent {
 
@@ -22,7 +21,5 @@ public interface CVComponent {
     ColoredλImage scale(ColoredλImage λimage, float scalefactor);
 
     ColoredλImage map(ColoredλImage λimage, Rectangle inputArea, Rectangle outputArea);
-
-    ColoredλImage cache(ColoredλImage image, ColoredλImageCache cache);
 
 }

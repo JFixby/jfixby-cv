@@ -32,7 +32,7 @@ public class ImageTest {
 	// grayscale = Lambda.cache(grayscale, CV.newImageCache(w, h));
 	// grayscale = CV.invert().apply(grayscale);
 	λimage = CV.blur(λimage, 3f, w, h);
-	λimage = CV.cache(λimage, ImageProcessing.newImageCache(w, h));
+	// λimage = CV.cache(λimage, ImageProcessing.newImageCache(w, h));
 
 	// grayscale = CV.cache(grayscale,).apply(λimage);
 
