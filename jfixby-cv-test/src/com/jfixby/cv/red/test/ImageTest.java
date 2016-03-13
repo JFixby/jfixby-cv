@@ -13,7 +13,7 @@ import com.jfixby.cmns.api.image.ColoredλImage;
 import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cv.api.CV;
-import com.jfixby.cv.red.awt.RedCV;
+import com.jfixby.cv.argb.red.RedCV;
 import com.jfixby.red.desktop.DesktopAssembler;
 import com.jfixby.red.desktop.image.RedImageAWT;
 

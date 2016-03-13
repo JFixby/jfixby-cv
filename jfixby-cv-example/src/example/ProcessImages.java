@@ -23,7 +23,7 @@ import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cmns.api.math.MathTools;
 import com.jfixby.cmns.api.math.Matrix;
 import com.jfixby.cv.api.CV;
-import com.jfixby.cv.red.awt.RedCV;
+import com.jfixby.cv.argb.red.RedCV;
 import com.jfixby.red.desktop.DesktopAssembler;
 import com.jfixby.red.desktop.image.RedImageAWT;
 
