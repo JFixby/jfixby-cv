@@ -60,7 +60,7 @@ public class ImageTest {
 
     private static void saveResult(ColoredλImage image, int w, int h, String filename) throws IOException {
 
-	ColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
+	ColorMapSpecs lambda_specs = ImageProcessing.newColorMapSpecs();
 
 	lambda_specs.setColorMapWidth(w);
 	lambda_specs.setColorMapHeight(h);

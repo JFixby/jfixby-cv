@@ -157,7 +157,7 @@ public class ProcessImages {
 
 	private static void saveResult(ColoredλImage image, Rectangle output_image_size, File output_image_file) throws IOException {
 
-		ColorMapSpecs lambda_specs = ImageProcessing.newLambdaColorMapSpecs();
+		ColorMapSpecs lambda_specs = ImageProcessing.newColorMapSpecs();
 		int w = (int) output_image_size.getWidth();
 		int h = (int) output_image_size.getHeight();
 		lambda_specs.setColorMapWidth(w);
