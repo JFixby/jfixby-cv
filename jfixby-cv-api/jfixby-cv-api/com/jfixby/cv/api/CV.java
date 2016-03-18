@@ -6,7 +6,6 @@ import com.jfixby.cmns.api.color.Color;
 import com.jfixby.cmns.api.color.CustomColor;
 import com.jfixby.cmns.api.geometry.Rectangle;
 import com.jfixby.cmns.api.image.ColoredλImage;
-import com.jfixby.cmns.api.image.ColoredλImageCache;
 
 public class CV {
 
