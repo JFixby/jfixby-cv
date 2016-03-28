@@ -23,7 +23,7 @@ public class RedCV implements CVComponent {
 
     static final private λOperator grayscale = (λimage, params) -> ((x, y) -> {
 	Color color = λimage.valueAt(x, y);
-	float gray_value = color.getGrayscaleValue();
+	float gray_value = color.gray();
 	Color gray = Colors.newColor(gray_value, gray_value, gray_value);
 	return gray;
     });
