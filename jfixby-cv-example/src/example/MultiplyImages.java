@@ -18,7 +18,7 @@ import com.jfixby.cmns.api.image.ImageProcessing;
 import com.jfixby.cmns.api.log.L;
 import com.jfixby.cv.api.CV;
 import com.jfixby.cv.argb.red.RedCV;
-import com.jfixby.red.desktop.DesktopAssembler;
+import com.jfixby.red.desktop.DesktopSetup;
 import com.jfixby.red.desktop.image.RedImageAWT;
 
 public class MultiplyImages {
@@ -26,7 +26,7 @@ public class MultiplyImages {
 	public static final void main(String[] args) throws IOException {
 
 		// ---Устанавливаем и инициализируем компоненты------------
-		DesktopAssembler.setup();
+		DesktopSetup.deploy();
 		ImageAWT.installComponent(new RedImageAWT());
 		CV.installComponent(new RedCV());
 

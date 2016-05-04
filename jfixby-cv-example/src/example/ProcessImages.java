@@ -23,7 +23,7 @@ import com.jfixby.cmns.api.math.MathTools;
 import com.jfixby.cmns.api.math.Matrix;
 import com.jfixby.cv.api.CV;
 import com.jfixby.cv.argb.red.RedCV;
-import com.jfixby.red.desktop.DesktopAssembler;
+import com.jfixby.red.desktop.DesktopSetup;
 import com.jfixby.red.desktop.image.RedImageAWT;
 
 public class ProcessImages {
@@ -31,7 +31,7 @@ public class ProcessImages {
 	public static final void main(String[] args) throws IOException {
 
 		// ---Устанавливаем и инициализируем компоненты------------
-		DesktopAssembler.setup();
+		DesktopSetup.deploy();
 		ImageAWT.installComponent(new RedImageAWT());
 		CV.installComponent(new RedCV());
 

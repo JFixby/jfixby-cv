@@ -19,14 +19,14 @@ import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cv.api.CV;
 import com.jfixby.cv.argb.red.RedCV;
-import com.jfixby.red.desktop.DesktopAssembler;
+import com.jfixby.red.desktop.DesktopSetup;
 import com.jfixby.red.desktop.image.RedImageAWT;
 
 public class EdgesExample {
 
 	public static void main(String[] args) throws IOException {
 		// ---Устанавливаем и инициализируем компоненты------------
-		DesktopAssembler.setup();
+		DesktopSetup.deploy();
 		ImageAWT.installComponent(new RedImageAWT());
 		CV.installComponent(new RedCV());
 
