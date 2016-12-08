@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.jfixby.cmns.api.collections.Collections;
 import com.jfixby.cmns.api.collections.List;
 import com.jfixby.cmns.api.color.Colors;
+import com.jfixby.cmns.api.desktop.DesktopSetup;
 import com.jfixby.cmns.api.desktop.ImageAWT;
 import com.jfixby.cmns.api.file.File;
 import com.jfixby.cmns.api.file.LocalFileSystem;
@@ -20,7 +21,6 @@ import com.jfixby.cmns.api.log.L;
 import com.jfixby.cmns.api.math.FloatMath;
 import com.jfixby.cv.api.CV;
 import com.jfixby.cv.argb.red.RedCV;
-import com.jfixby.red.desktop.DesktopSetup;
 import com.jfixby.red.desktop.image.RedImageAWT;
 
 public class BatmanExample {
