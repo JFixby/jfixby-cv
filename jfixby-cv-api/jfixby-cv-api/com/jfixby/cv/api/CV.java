@@ -1,11 +1,11 @@
 package com.jfixby.cv.api;
 
-import com.jfixby.cmns.api.ComponentInstaller;
-import com.jfixby.cmns.api.collections.Collection;
-import com.jfixby.cmns.api.color.Color;
-import com.jfixby.cmns.api.color.CustomColor;
-import com.jfixby.cmns.api.geometry.Rectangle;
-import com.jfixby.cmns.api.image.ColoredλImage;
+import com.jfixby.scarabei.api.ComponentInstaller;
+import com.jfixby.scarabei.api.collections.Collection;
+import com.jfixby.scarabei.api.color.Color;
+import com.jfixby.scarabei.api.color.CustomColor;
+import com.jfixby.scarabei.api.geometry.Rectangle;
+import com.jfixby.scarabei.api.image.ColoredλImage;
 
 public class CV {
 

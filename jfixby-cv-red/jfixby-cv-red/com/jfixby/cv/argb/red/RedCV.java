@@ -1,25 +1,25 @@
 
 package com.jfixby.cv.argb.red;
 
-import com.jfixby.cmns.api.collections.Collection;
-import com.jfixby.cmns.api.collections.Collections;
-import com.jfixby.cmns.api.collections.List;
-import com.jfixby.cmns.api.color.Color;
-import com.jfixby.cmns.api.color.Colors;
-import com.jfixby.cmns.api.color.CustomColor;
-import com.jfixby.cmns.api.debug.Debug;
-import com.jfixby.cmns.api.err.Err;
-import com.jfixby.cmns.api.floatn.FixedFloat2;
-import com.jfixby.cmns.api.floatn.Float2;
-import com.jfixby.cmns.api.geometry.Geometry;
-import com.jfixby.cmns.api.geometry.Rectangle;
-import com.jfixby.cmns.api.image.ColoredλImage;
 import com.jfixby.cmns.api.lambda.λFunction;
-import com.jfixby.cmns.api.math.FloatMath;
-import com.jfixby.cmns.api.math.Int2;
-import com.jfixby.cmns.api.math.IntegerMath;
 import com.jfixby.cv.api.CVComponent;
 import com.jfixby.cv.api.λOperator;
+import com.jfixby.scarabei.api.collections.Collection;
+import com.jfixby.scarabei.api.collections.Collections;
+import com.jfixby.scarabei.api.collections.List;
+import com.jfixby.scarabei.api.color.Color;
+import com.jfixby.scarabei.api.color.Colors;
+import com.jfixby.scarabei.api.color.CustomColor;
+import com.jfixby.scarabei.api.debug.Debug;
+import com.jfixby.scarabei.api.err.Err;
+import com.jfixby.scarabei.api.floatn.FixedFloat2;
+import com.jfixby.scarabei.api.floatn.Float2;
+import com.jfixby.scarabei.api.geometry.Geometry;
+import com.jfixby.scarabei.api.geometry.Rectangle;
+import com.jfixby.scarabei.api.image.ColoredλImage;
+import com.jfixby.scarabei.api.math.FloatMath;
+import com.jfixby.scarabei.api.math.Int2;
+import com.jfixby.scarabei.api.math.IntegerMath;
 
 public class RedCV implements CVComponent {
 
