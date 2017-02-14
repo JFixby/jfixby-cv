@@ -12,7 +12,7 @@ import com.jfixby.scarabei.api.color.Colors;
 import com.jfixby.scarabei.api.color.CustomColor;
 import com.jfixby.scarabei.api.debug.Debug;
 import com.jfixby.scarabei.api.err.Err;
-import com.jfixby.scarabei.api.floatn.FixedFloat2;
+import com.jfixby.scarabei.api.floatn.ReadOnlyFloat2;
 import com.jfixby.scarabei.api.floatn.Float2;
 import com.jfixby.scarabei.api.geometry.Geometry;
 import com.jfixby.scarabei.api.geometry.Rectangle;
@@ -86,29 +86,29 @@ public class RedCV implements CVComponent {
 		return blur.apply(input, radius, image_width, image_height);
 	}
 
-	public λFunction<FixedFloat2, Color> BLUR (final λFunction<FixedFloat2, Color> input, final int radius, final Rectangle area) {
-		λFunction<FixedFloat2, Color> result = input;
+	public λFunction<ReadOnlyFloat2, Color> BLUR (final λFunction<ReadOnlyFloat2, Color> input, final int radius, final Rectangle area) {
+		λFunction<ReadOnlyFloat2, Color> result = input;
 		for (int i = 0; i < radius; i++) {
 			result = this.blur(result, area);
 		}
 		return result;
 	}
 
-	private λFunction<FixedFloat2, Color> blur (final λFunction<FixedFloat2, Color> input, final Rectangle area) {
+	private λFunction<ReadOnlyFloat2, Color> blur (final λFunction<ReadOnlyFloat2, Color> input, final Rectangle area) {
 		return XY -> {
-			final List<FixedFloat2> neighbours = collectPointsOfInterest(XY, 1, area);
+			final List<ReadOnlyFloat2> neighbours = collectPointsOfInterest(XY, 1, area);
 			return averageColor(neighbours, input);
 		};
 	}
 
-	static final public Color averageColor (final List<FixedFloat2> points, final λFunction<FixedFloat2, Color> input) {
+	static final public Color averageColor (final List<ReadOnlyFloat2> points, final λFunction<ReadOnlyFloat2, Color> input) {
 		if (points.size() == 0) {
 			Err.reportError("Empty input");
 		}
 		float r = 0;
 		float g = 0;
 		float b = 0;
-		for (final FixedFloat2 neighbour : points) {
+		for (final ReadOnlyFloat2 neighbour : points) {
 			final Color color = input.val(neighbour);
 			r = r + color.red();
 			g = g + color.green();
@@ -120,9 +120,9 @@ public class RedCV implements CVComponent {
 		return Colors.newColor(r, g, b);
 	}
 
-	static final private List<FixedFloat2> collectPointsOfInterest (final FixedFloat2 XY, final float radius,
+	static final private List<ReadOnlyFloat2> collectPointsOfInterest (final ReadOnlyFloat2 XY, final float radius,
 		final Rectangle area) {
-		final List<FixedFloat2> points = Collections.newList();
+		final List<ReadOnlyFloat2> points = Collections.newList();
 		final double x0 = XY.getX();
 		final double y0 = XY.getY();
 		for (double x = x0 - radius; x <= x0 + radius; x = x + 1f) {
