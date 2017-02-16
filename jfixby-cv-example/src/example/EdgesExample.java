@@ -7,7 +7,7 @@ import com.jfixby.cv.api.CV;
 import com.jfixby.cv.argb.red.RedCV;
 import com.jfixby.scarabei.api.color.Color;
 import com.jfixby.scarabei.api.color.Colors;
-import com.jfixby.scarabei.api.desktop.DesktopSetup;
+import com.jfixby.scarabei.api.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.api.desktop.ImageAWT;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
@@ -26,7 +26,7 @@ public class EdgesExample {
 
 	public static void main(String[] args) throws IOException {
 		// ---Устанавливаем и инициализируем компоненты------------
-		DesktopSetup.deploy();
+		ScarabeiDesktop.deploy();
 		ImageAWT.installComponent(new RedImageAWT());
 		CV.installComponent(new RedCV());
 
