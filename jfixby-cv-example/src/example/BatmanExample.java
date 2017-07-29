@@ -8,7 +8,6 @@ import com.jfixby.cv.argb.red.RedCV;
 import com.jfixby.scarabei.api.collections.Collections;
 import com.jfixby.scarabei.api.collections.List;
 import com.jfixby.scarabei.api.color.Colors;
-import com.jfixby.scarabei.api.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.api.desktop.ImageAWT;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
@@ -21,6 +20,7 @@ import com.jfixby.scarabei.api.image.ImageProcessing;
 import com.jfixby.scarabei.api.lambda.img.bin.λBinaryImage;
 import com.jfixby.scarabei.api.log.L;
 import com.jfixby.scarabei.api.math.FloatMath;
+import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.red.desktop.image.RedImageAWT;
 
 public class BatmanExample {

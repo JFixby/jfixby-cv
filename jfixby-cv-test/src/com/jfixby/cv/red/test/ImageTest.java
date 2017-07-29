@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import com.jfixby.cv.api.CV;
 import com.jfixby.cv.argb.red.RedCV;
-import com.jfixby.scarabei.api.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.api.desktop.ImageAWT;
 import com.jfixby.scarabei.api.file.File;
 import com.jfixby.scarabei.api.file.LocalFileSystem;
@@ -16,6 +15,7 @@ import com.jfixby.scarabei.api.image.ColorMapSpecs;
 import com.jfixby.scarabei.api.image.ColoredλImage;
 import com.jfixby.scarabei.api.image.ImageProcessing;
 import com.jfixby.scarabei.api.log.L;
+import com.jfixby.scarabei.red.desktop.ScarabeiDesktop;
 import com.jfixby.scarabei.red.desktop.image.RedImageAWT;
 
 public class ImageTest {
