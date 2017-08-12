@@ -1,7 +1,7 @@
 package com.jfixby.cv.api.lambda;
 
-import com.jfixby.scarabei.api.floatn.ReadOnlyFloat2;
 import com.jfixby.scarabei.api.floatn.Float2;
+import com.jfixby.scarabei.api.floatn.ReadOnlyFloat2;
 
 public interface Float2Operation {
 
