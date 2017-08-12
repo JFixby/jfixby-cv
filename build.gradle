@@ -1,5 +1,5 @@
 ext {
-        scarabeiVersion = "1.5.1"
+        //scarabeiVersion = "1.5.1"
 }
 
 allprojects {
@@ -18,7 +18,7 @@ targetCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 dependencies {
-	 compile "com.github.Scarabei.Scarabei:scarabei-api:$scarabeiVersion"         
+	 //compile "com.github.Scarabei.Scarabei:scarabei-api:$scarabeiVersion"         
 }
 
 
